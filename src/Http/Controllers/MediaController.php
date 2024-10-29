@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Media\Uploader\Http\Controllers;
 
-use App\Models\Media;
+use Media\Uploader\Models\Media;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
 
 class MediaController extends Controller
 {
