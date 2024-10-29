@@ -13,6 +13,6 @@
             "name": "Adil"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {}
 }
