@@ -1,0 +1,21 @@
+<?php
+
+namespace Media\Uploader;
+
+use Illuminate\Support\ServiceProvider;
+
+class MediaUploaderServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        // Publish config, migrations, views, etc.
+        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'media');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+
+        $this->publishes([
+            __DIR__.'/resources/views' => resource_path('views/media'),
+            __DIR__.'/resources/assets' => public_path('media'),
+        ], 'media-uploader');
+    }
+}
