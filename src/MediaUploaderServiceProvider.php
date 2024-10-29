@@ -14,7 +14,7 @@ class MediaUploaderServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
         $this->publishes([
-            __DIR__.'/resources/views' => resource_path('views/media'),
+            __DIR__.'/resources/views' => resource_path('views'),
             __DIR__.'/resources/assets' => public_path('media'),
         ], 'media-uploader');
     }
