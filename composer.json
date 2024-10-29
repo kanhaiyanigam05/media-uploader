@@ -2,7 +2,7 @@
     "name": "kanhaiyanigam05/media-uploader",
     "description": "This is a media uploader package, which able to upload images and videos and able to upload it on front end",
     "type": "library",
-    "license": "EGSS",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Media\\Uploader\\": "src/"
