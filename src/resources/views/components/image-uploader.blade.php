@@ -1,7 +1,17 @@
+@php
+    $image = '';
+    $name = 'image';
+    $images = [];
+    $label = '';
+    $type = 'image';
+    $columns = 'col-lg-2 col-md-3 col-4';
+    $multiple = false;
+@endphp
+
 <div class="mb-3 position-relative">
     <label for="image" class="form-label">{{ $label }}</label>
     <div class="gallery-images-wrapper list-images form-fieldset" data-columns="{{ $columns }}" {{ $multiple
-        ? 'data-multiple=true' : '' }} data-name="{{ $newName }}">
+        ? 'data-multiple=true' : '' }} data-name="{{ $name }}">
         <div class="images-wrapper mb-2">
             <div data-bs-toggle="modal" data-bs-target="#imagesModel"
                 class="text-center cursor-pointer default-placeholder-gallery-image"
@@ -24,7 +34,7 @@
             <div class="row w-100 list-gallery-media-images ui-sortable">
                 @if ($image)
                 <div class="{{ $columns }} gallery-image-item-handler mb-2">
-                    <input type="hidden" name="{{ $newName }}" value="{{ $image }}" class="hidden-media"
+                    <input type="hidden" name="{{ $name }}" value="{{ $image }}" class="hidden-media"
                         id="hidden-input-imagesModel">
                     <div class="custom-image-box image-box">
                         <div class="preview-image-wrapper w-100">
@@ -58,7 +68,7 @@
                 @endif
                 @foreach ($images as $image)
                 <div class="{{ $columns }} gallery-image-item-handler mb-2">
-                    <input type="hidden" name="{{ $newName }}" value="{{ $image }}" class="hidden-media"
+                    <input type="hidden" name="{{ $name }}" value="{{ $image }}" class="hidden-media"
                         id="hidden-input-imagesModel">
                     <div class="custom-image-box image-box">
                         <div class="preview-image-wrapper w-100">
