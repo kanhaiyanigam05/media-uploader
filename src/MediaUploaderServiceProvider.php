@@ -15,11 +15,10 @@ class MediaUploaderServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/resources/views' => resource_path('views'),
-<<<<<<< HEAD
+
             __DIR__.'/resources/assets' => public_path('media'),
-=======
+
             __DIR__.'/resources/assets' => public_path('media-assets'),
->>>>>>> 70f0cec (Initial commit)
         ], 'media-uploader');
     }
 }
