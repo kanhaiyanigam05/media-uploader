@@ -33,7 +33,6 @@
             </div>
             <div class="row w-100 list-gallery-media-images ui-sortable">
                 @if ($image)
-<<<<<<< HEAD
                 <div class="{{ $columns }} gallery-image-item-handler mb-2">
                     <input type="hidden" name="{{ $name }}" value="{{ $image }}" class="hidden-media"
                         id="hidden-input-imagesModel">
@@ -50,24 +49,6 @@
                                 @endif
                                 <div class="image-picker-backdrop"></div>
                                 <span class="image-picker-remove-button">
-=======
-                    <div class="{{ $columns }} gallery-image-item-handler mb-2">
-                        <input type="hidden" name="{{ $name }}" value="{{ $image }}" class="hidden-media"
-                               id="hidden-input-imagesModel">
-                        <div class="custom-image-box image-box">
-                            <div class="preview-image-wrapper w-100">
-                                <div class="preview-image-inner">
-                                    @if ($type == 'image')
-                                        <img class="preview-image w-100" src="{{ asset($image) }}" alt="{{ $image }}"
-                                             title="{{ $image }}" style="width: 100px">
-                                    @elseif($type == 'video')
-                                        <video class="preview-image w-100" width="100px" autoplay muted>
-                                            <source src="{{ asset($image) }}" type="video/mp4">
-                                        </video>
-                                    @endif
-                                    <div class="image-picker-backdrop"></div>
-                                    <span class="image-picker-remove-button">
->>>>>>> 70f0cec (Initial commit)
                                     <button type="button" data-remove class="btn btn-sm btn-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-left"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -86,7 +67,6 @@
                     </div>
                 @endif
                 @foreach ($images as $image)
-<<<<<<< HEAD
                 <div class="{{ $columns }} gallery-image-item-handler mb-2">
                     <input type="hidden" name="{{ $name }}" value="{{ $image }}" class="hidden-media"
                         id="hidden-input-imagesModel">
@@ -103,24 +83,6 @@
                                 @endif
                                 <div class="image-picker-backdrop"></div>
                                 <span class="image-picker-remove-button">
-=======
-                    <div class="{{ $columns }} gallery-image-item-handler mb-2">
-                        <input type="hidden" name="{{ $name }}" value="{{ $image }}" class="hidden-media"
-                               id="hidden-input-imagesModel">
-                        <div class="custom-image-box image-box">
-                            <div class="preview-image-wrapper w-100">
-                                <div class="preview-image-inner">
-                                    @if ($type == 'image')
-                                        <img class="preview-image w-100" src="{{ asset($image) }}" alt="{{ $image }}"
-                                             title="{{ $image }}" style="width: 100px">
-                                    @elseif($type == 'video')
-                                        <video class="preview-image w-100" width="100px" autoplay muted>
-                                            <source src="{{ asset($image) }}" type="video/mp4">
-                                        </video>
-                                    @endif
-                                    <div class="image-picker-backdrop"></div>
-                                    <span class="image-picker-remove-button">
->>>>>>> 70f0cec (Initial commit)
                                     <button type="button" data-remove class="btn btn-sm btn-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-left"
                                              width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -276,23 +238,5 @@
             });
         </script>
 
-<<<<<<< HEAD
-        $("[data-remove]").on("click", function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            const galleryWrapper = $(this).closest('.gallery-images-wrapper');
-            $(this).closest(".gallery-image-item-handler").remove();
-            const imageList = galleryWrapper.find('.list-gallery-media-images');
-            if(imageList.children().length <= 0) {
-                galleryWrapper.find(".default-placeholder-gallery-image").show();
-            }
-        });
-
-    });
-</script>
-
-@endonce
-=======
     @endonce
->>>>>>> 70f0cec (Initial commit)
 @endpush
