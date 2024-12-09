@@ -153,7 +153,7 @@ class MediaController extends Controller
         $slugName = str()->slug(strtolower($nameWithoutExtension));
         $uniqueId = uniqid();
         $newImageName = $slugName . '-' . $uniqueId . '.' . $extension;
-        $image->storeAs('uploads', $newImageName);
+        $image->move(public_path('uploads/'), $newImageName);
         $imageData = Media::create([
             'image' => 'uploads/' . $newImageName,
             'alt' => $nameWithoutExtension,
