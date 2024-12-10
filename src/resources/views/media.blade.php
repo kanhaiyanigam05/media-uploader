@@ -32,13 +32,15 @@
                                             <li>
                                                 <a class="dropdown-item staticBackdropOpen" href="javascript:void(0)"
                                                     type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop"><i class="fa-solid fa-upload"></i>
-                                                    Upload from local</a>
+                                                    data-bs-target="#staticBackdrop">
+                                                    <i class="fa-solid fa-upload"></i>Upload from local
+                                                </a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item" href="#" type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop1"><i class="fa-solid fa-link"></i>
-                                                    Upload from URL</a>
+                                                    data-bs-target="#staticBackdrop1">
+                                                    <i class="fa-solid fa-link"></i>Upload from URL
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -136,7 +138,7 @@
                                     <button type="button" class="btn btn-primary action-button">
                                         <i class="fa-regular fa-hand-pointer hand-icons"></i> Actions
                                     </button>
-                                    <button id="toggleButton" class="btn btn-primary action-button">
+                                    <button id="toggleButton" class="btn btn-primary action-button ">
                                         <i class="fa-solid fa-arrow-left-long change-icon"></i>
                                     </button>
                                 </div>
@@ -148,93 +150,23 @@
                                             <tr>
                                                 <th scope="col" colspan="2"></th>
                                                 <th scope="col">Type</th>
-                                                <th scope="col">Uploaded At</th>
+                                                <th scope="col">Alt Text (Name)</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody id="uploaded-files">
-                                            @foreach (\App\Models\Media::all() as $image)
-                                            <tr class="table-active">
-                                                <td scope="col" colspan="2">
-                                                    <div>
-                                                        <div class="checkbox-wrapper-4">
-                                                            <input class="inp-cbx" name="media[]"
-                                                                id="media-image-{{ $image->id }}" type="checkbox"
-                                                                value="{{ $image->id }}" />
-                                                            <label class="cbx" for="media-image-{{ $image->id }}">
-                                                                <span>
-                                                                    <svg width="12px" height="10px">
-                                                                        <use xlink:href="#check-4"></use>
-                                                                    </svg>
-                                                                </span>
-                                                                <span>
-                                                                    @if ($image->type == 'image')
-                                                                    <img src="{{ asset($image->image) }}"
-                                                                        alt="{{ $image->alt }}"
-                                                                        title="{{ $image->title }}" style="width: 100px"
-                                                                        class="">
-                                                                    @elseif($image->type == 'video')
-                                                                    <video src="{{ asset($image->image) }}"
-                                                                        alt="{{ $image->alt }}"
-                                                                        title="{{ $image->title }}"
-                                                                        style="width: 100px"></video>
-                                                                    @endif
-                                                                </span>
-                                                            </label>
-                                                            <svg class="inline-svg">
-                                                                <symbol id="check-4" viewbox="0 0 12 10">
-                                                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                                                </symbol>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td scope="col">
-                                                    <div>
-                                                        <p class="m-0 text-capitalize">{{ $image->type }}</p>
-                                                    </div>
-                                                </td>
-                                                <td scope="col">
-                                                    <div>
-                                                        <p class="m-0">{{ $image->created_at->format('Y-m-d H:i:s') }}
-                                                        </p>
-                                                    </div>
-                                                </td>
-                                                <td scope="col">
-                                                    <div class="gap-2 d-flex">
-                                                        <form action="{{ route('media.destroy', $image->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                onclick="return confirm('Are you sure you want to delete this image?');"
-                                                                class="btn btn-danger">
-                                                                <i class="fa-regular fa-trash-can"></i>
-                                                            </button>
-                                                        </form>
-                                                        <a href="javascript:void(0)" class="btn btn-info"
-                                                            data-id="{{ $image->id }}">
-                                                            <i class="fa-regular fa-eye"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @foreach (\Media\Uploader\Models\Media::all() as $media)
+                                                <x-media-item :media="$media" />
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <div class="file-description list image-sidebar active" id="sidebar-1">
+                                <div class="file-description active list image-sidebar sidebar-2" id="sidebar-2">
                                     <div class="item">
                                         <div class="text-center file-symbol">
-                                            {{-- <i class="fa-regular fa-folder file-icon"></i> --}}
                                             <img src="" id="sidebar-image" alt="">
                                         </div>
                                         <div class="file-details">
-                                            <div id="sidebar-type">
-                                                <strong>Type</strong>
-                                                <p>image</p>
-                                            </div>
                                             <div id="sidebar-alt">
                                                 <strong>Alt</strong>
                                                 <p>name</p>
@@ -242,6 +174,10 @@
                                             <div id="sidebar-title">
                                                 <strong>Title</strong>
                                                 <p>name</p>
+                                            </div>
+                                            <div id="sidebar-type">
+                                                <strong>Type</strong>
+                                                <p>image</p>
                                             </div>
                                             <div id="sidebar-created">
                                                 <strong>Uploaded at</strong>
@@ -254,6 +190,46 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="file-description active list image-sidebar sidebar-1" id="sidebar-1">
+                                    <form id="editbar-form" class="item" method="POST" onsubmit="handleUpdateImage(event)">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="text-center file-symbol" id="editbar-image">
+                                            <img src="" alt="">
+                                            <input type="file" name="image" class="w-100 form-control">
+                                        </div>
+                                        <div class="relative file-details">
+                                            <div id="editbar-alt">
+                                                <label class="form-label">Alt</label>
+                                                <input class="form-control" name="alt" placeholder="alt" />
+                                            </div>
+                                            <div id="editbar-title">
+                                                <label class="form-label">Title</label>
+                                                <input class="form-control" name="title" placeholder="title" />
+                                            </div>
+                                            <div id="sidebar-type">
+                                                <strong>Type</strong>
+                                                <p>image</p>
+                                            </div>
+                                            <div id="editbar-created">
+                                                <strong>Uploaded at</strong>
+                                                <p>2024-09-27 02:31:38</p>
+                                            </div>
+                                            <div id="editbar-updated">
+                                                <strong>Modified at</strong>
+                                                <p>2024-09-27 02:31:38</p>
+                                            </div>
+                                            <div class="flex justify-end">
+                                                <button type="submit"
+                                                    class="btn btn-success">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -261,7 +237,6 @@
             </div>
         </section>
     </main>
-
     <!-- file-upload modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -296,7 +271,7 @@
     </div>
     <!-- file-upload modal -->
     <!-- file-upload from url modal -->
-    <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="staticBackdrop1" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
             <form id="upload-files" action="{{ route('media.upload.url') }}" method="POST" class="modal-content">
@@ -330,7 +305,7 @@
     </div>
     <!-- file-upload from url modal -->
     <!-- create-folder modal -->
-    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="staticBackdrop2" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
             <div class="modal-content">
@@ -350,134 +325,6 @@
         </div>
     </div>
     <!-- create-folder modal -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn3.devexpress.com/jslib/23.1.3/js/dx.all.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"></script>
-    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script>
-        Dropzone.options.demoUpload = {
-            paramName: "file",
-            maxFilesize: 50,
-            acceptedFiles: "image/*,video/*",
-            success: function (file, response) {
-                console.log(file, response);
-                if (response.file) {
-                    appendUploadedFile(response.file, response.timestamp);
-                }
-            },
-        };
-
-        function appendUploadedFile(file, timestamp) {
-            if (file.type === "image") {
-                fileContent = `<img src="${file.url}" alt="${file.name}" title="${file.name}" style="width: 100px">`;
-            } else if (file.type === "video") {
-                fileContent = `<video width="100px" controls><source src="${file.url}" type="video/mp4"></video>`;
-            }
-            let newRow = `<tr class="table-active">
-                <td scope="col" colspan="2">
-                    <div>
-                        <div class="checkbox-wrapper-4">
-                            <input id="media-image-${file.id}" class="inp-cbx" name="media[]" type="checkbox" value="${file.id}" />
-                            <label class="cbx" for="media-image-${file.id}">
-                                <span>
-                                    <svg width="12px" height="10px">
-                                        <use xlink:href="#check-4"></use>
-                                    </svg>
-                                </span>
-                                <span>${fileContent}</span>
-                            </label>
-                            <svg class="inline-svg">
-                                <symbol id="check-4" viewbox="0 0 12 10">
-                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                </symbol>
-                            </svg>
-                        </div>
-                    </div>
-                </td>
-                <td scope="col">
-                    <div>
-                        <p class="m-0 text-capitalize">${file.type}</p>
-                    </div>
-                </td>
-                <td scope="col">
-                    <div>
-                        <p class="m-0">${file.created_at_formatted}</p>
-                    </div>
-                </td>
-                <td scope="col">
-                    <div class="gap-2 d-flex">
-                        <form action="{{ route('media.destroy', ':id') }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this image?');" class="btn btn-danger">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </button>
-                        </form>
-                    </div>
-                </td>
-            </tr>`.replace(":id", file.id);
-            $("#uploaded-files").append(newRow);
-        }
-
-
-        $(document).ready(function () {
-            $('#upload-files').on('submit', function (e) {
-                e.preventDefault();
-
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: $(this).attr('method'),
-                    data: new FormData(this),
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        if (response.files) {
-                            response.files.forEach(function(fileData) {
-                                appendUploadedFile(fileData);
-                                $('#upload-files')[0].reset();
-                            });
-                        }
-                    }
-                });
-            });
-
-
-            $('.btn-info').on('click', function () {
-                const id = $(this).data('id');
-                const url = "{{ route('media.show', ':id') }}".replace(':id', id);
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (media) {
-                        console.log(media);
-                        $('#sidebar-image').attr('src', media.image);
-                        $('#sidebar-image').attr('alt', media.name);
-                        $('#sidebar-image').attr('title', media.name);
-                        $('#sidebar-type p').text(media.type);
-                        $('#sidebar-alt p').text(media.alt);
-                        $('#sidebar-title p').text(media.title);
-                        $('#sidebar-created p').text(formatDate(media.created_at));
-                        $('#sidebar-updated p').text(formatDate(media.updated_at));
-                        $('#sidebar-1').removeClass('active');
-                        // $('#sidebar-2').addClass('active');
-                    }
-                });
-            });
-        });
-        function formatDate(timestamp) {
-            const date = new Date(timestamp);
-            return date.toLocaleString('en-CA', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            }).replace(',', '');
-        }
-    </script>
 </body>
 
 </html>
