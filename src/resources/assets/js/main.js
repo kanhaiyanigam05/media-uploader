@@ -1,4 +1,4 @@
-function toggleSidebar() {
+/*function toggleSidebar() {
     const sidebar = document.getElementById("sidebar-1");
     const buttonIcon = document.querySelector("#toggleButton .change-icon");
 
@@ -13,8 +13,4 @@ function toggleSidebar() {
         buttonIcon.classList.remove("fa-arrow-left-long"); // Remove the 'arrow left' icon
         buttonIcon.classList.add("fa-right-from-bracket"); // Add the 'exit' icon
     }
-}
-
-document
-    .getElementById("toggleButton")
-    .addEventListener("click", toggleSidebar);
+}*/
